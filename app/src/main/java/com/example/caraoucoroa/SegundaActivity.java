@@ -31,16 +31,6 @@ public class SegundaActivity extends AppCompatActivity {
 
         sorteio(palpiteRecebido, txt);
 
-
-
-
-
-
-
-
-
-
-
     }
 
     private void sorteio(String palpiteRecebido, TextView textView){
@@ -48,11 +38,18 @@ public class SegundaActivity extends AppCompatActivity {
 
         String palpite = palpiteRecebido.toUpperCase().trim();
         //tratar entrada
+        //verifica se contem a opcao
 
+        LADOMOEDA palpiteLado = null;
         for(LADOMOEDA lado : LADOMOEDA.values()){
-            if(!palpite.equals(lado.name())){
-                textView.setText("OPÇÃO INVÁLIDA");
+            if(palpite.equals(lado.name())){
+                palpiteLado = lado;
             }
+        }
+
+        if (palpiteLado == null){
+            textView.setText("opção inválida");
+            return;
         }
 
         //gerar um cara ou coroa com o random
@@ -60,33 +57,12 @@ public class SegundaActivity extends AppCompatActivity {
         Random random = new Random();
         int sorteado = random.nextInt(2);
 
-        LADOMOEDA lado = Enum.valueOf(LADOMOEDA.class, palpite);
-
-        textView.setText(lado.name() + lado.getLadoMoeda());
-
-//
-//
-//        LADOMOEDA lado = Enum.valueOf(LADOMOEDA.class, palpite.toUpperCase() );
-//
-//        textView.setText(palpite.toUpperCase());
-
-        //mostrar msg de sucesso ou fracasso
-
-       /* if(!palpite.equals("Cara")  && !palpite.equals("Coroa")){
-            textView.setText("Opção inválida");
-            return;
+        if(palpiteLado.getLadoMoeda()==sorteado){
+            textView.setText("Acertou!!");
+        } else {
+            textView.setText("Falhou");
         }
 
-        if(palpite.equals("Cara")){
-            textView.setText("Acertou!");
-            return;
-        }
-        if (palpite.equals("Coroa")) {
-            textView.setText("Acertou");
-            return;
-        }
-
-        textView.setText("Errou");*/
     }
 
     public enum LADOMOEDA {
